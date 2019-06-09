@@ -1,7 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { FormGroup, Label, Input, Button, Table } from "reactstrap";
 
 import "./styles.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 class FlighLoadChecker extends React.Component {
   constructor() {
@@ -48,32 +50,49 @@ class FlighLoadChecker extends React.Component {
   render() {
     return (
       <div>
-        <textarea
-          placeholder="Enter flight load"
-          onChange={this.onChangeLoad}
-          value={this.state.flightLoad}
-        />
-        <br />
-        <button onClick={this.generateLoad}>Generate</button>
-        <br />
-        <div>
-          <select onChange={this.onChangeFlightFiter}>
+        <FormGroup>
+          <div className="text-center font-weight-bold">
+            <Label>Flight Load Calculator</Label>
+          </div>
+          <div className="mx-2">
+            <Input
+              placeholder="Enter flight load"
+              onChange={this.onChangeLoad}
+              value={this.state.flightLoad}
+              type="textarea"
+              name="text"
+              id="exampleText"
+            />
+          </div>
+        </FormGroup>
+        <div className="text-center">
+          <Button className="mb-3" color="primary" onClick={this.generateLoad}>
+            Generate
+          </Button>{" "}
+        </div>
+
+        <FormGroup className="mx-2">
+          <Label for="exampleSelect">Y Class Filter</Label>
+          <Input
+            type="select"
+            name="select"
+            onChange={this.onChangeFlightFiter}
+          >
             <option value={0}>All</option>
             <option value={40}>More than 40%</option>
             <option value={60}>More than 60%</option>
             <option value={80}>More than 80%</option>
-          </select>
-        </div>{" "}
-        <br />
-        <table>
+          </Input>
+        </FormGroup>
+        <Table className="text-center" bordered>
           <thead>
             <tr>
-              <th colSpan={2}>Flight Number</th>
-              <th colSpan={2}>Date</th>
-              <th colSpan={2}>Sector</th>
-              <th colSpan={2}>Capacity</th>
-              <th colSpan={2}>Booked</th>
-              <th colSpan={2}>Booked %</th>
+              <th>Flight Number</th>
+              <th>Date</th>
+              <th>Sector</th>
+              <th>Capacity</th>
+              <th>Booked</th>
+              <th>Booked %</th>
             </tr>
           </thead>
           {this.state.singleFlight.map((singleFlight, index) => {
@@ -102,24 +121,24 @@ class FlighLoadChecker extends React.Component {
             if (yClassPercentage > this.state.flightFilter) {
               return (
                 <tr key={index}>
-                  <td colSpan={2}>{flightNumber}</td>
+                  <td>{flightNumber}</td>
 
-                  <td colSpan={2}>{flightDate}</td>
-                  <td colSpan={2}>{flighSector}</td>
-                  <td colSpan={2}>
+                  <td>{flightDate}</td>
+                  <td>{flighSector}</td>
+                  <td>
                     F-{fClassCapacity} <br />
                     J-
                     {jClassCapacity} <br />
                     Y-{yClassCapacity}
                   </td>
-                  <td colSpan={2}>
+                  <td>
                     F-{fClassBooked} <br />
                     J-
                     {jClassBooked} <br />
                     Y-{yClassBooked}
                   </td>
 
-                  <td colSpan={2}>
+                  <td>
                     F-
                     {parseInt(fClassPercentage)} %
                     <br />
@@ -132,7 +151,7 @@ class FlighLoadChecker extends React.Component {
               );
             }
           })}
-        </table>
+        </Table>
       </div>
     );
   }
