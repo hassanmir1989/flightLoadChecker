@@ -1,2 +1,0 @@
-# flightLoadChecker
-Created with CodeSandbox
